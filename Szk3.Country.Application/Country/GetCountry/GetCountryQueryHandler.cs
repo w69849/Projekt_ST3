@@ -1,0 +1,32 @@
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Szk3.Country.Application.Common;
+using Szk3.Country.Application.Country.Models;
+
+namespace Szk3.Country.Application.Country.GetCountry
+{
+    public sealed class GetCountryQyeryHandler : IRequestHandler<GetCountryQuery, CountryDetailsDto?>
+    {
+        private readonly ICountryContext _countryContext;
+        public GetCountryQyeryHandler(ICountryContext countryContext) => _countryContext = countryContext;
+        public async Task<CountryDetailsDto?> Handle(GetCountryQuery request, CancellationToken cancellationToken)
+        {
+            var countries = await _countryContext.CountryQuery
+                .Where(x => x.Id == request.Id)
+                .Select(x => new CountryDetailsDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Code = x.Code,
+                    IsActive = x.IsActive,
+                    Cities = x.Cities.Select(c => new CityDto
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        IsActive = c.IsActive
+                    }).ToList()
+                }).FirstOrDefaultAsync(cancellationToken);
+            return countries;
+        }
+    }
+}
