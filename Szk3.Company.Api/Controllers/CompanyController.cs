@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Szk3.Company.Application.Companies.AddAddress;
 using Szk3.Company.Application.Companies.AddOwner;
+using Szk3.Company.Application.Companies.CreateCompany;
 
 namespace Szk3.Company.Api.Controllers
 {
@@ -16,7 +17,7 @@ namespace Szk3.Company.Api.Controllers
 			_mediator = mediator;
 		}
 
-		[HttpPost]
+		[HttpPost("address")]
 		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
 		public async Task<IActionResult> AddAddress([FromRoute] int companyId, [FromBody] AddAddressCommand request, CancellationToken token)
 		{
@@ -25,13 +26,21 @@ namespace Szk3.Company.Api.Controllers
 			return Ok(addressId);
 		}
 
-		[HttpPost]
+		[HttpPost("owner")]
 		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
 		public async Task<IActionResult> AddOwner([FromRoute] int companyId, [FromBody] AddOwnerCommand request, CancellationToken token)
 		{
 			var ownerId = await _mediator.Send(request, token);
 
 			return Ok(ownerId);
+		}
+
+		[HttpPost]
+		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
+		public async Task<IActionResult> CreateCompany([FromBody] CreateCompanyCommand request, CancellationToken token)
+		{
+			var companyId = await _mediator.Send(request, token);
+			return Ok(companyId);
 		}
 	}
 }

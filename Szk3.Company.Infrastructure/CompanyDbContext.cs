@@ -31,7 +31,7 @@ namespace Szk3.Company.Infrastructure
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			base.OnConfiguring(optionsBuilder);
-			optionsBuilder.UseSqlServer(@"server=(localdb)\\MSSQLLocalDB;database=country-dev;trusted_connection=true;TrustServerCertificate=True;\", x => x.MigrationsHistoryTable("__EFMigrationsHistory", DbConst.SCHEMA_NAME));
+			optionsBuilder.UseSqlServer(@"server=(localdb)\\MSSQLLocalDB;database=country-dev;trusted_connection=true;TrustServerCertificate=True;", x => x.MigrationsHistoryTable("__EFMigrationsHistory", DbConst.SCHEMA_NAME));
 		}
 	}
 }

@@ -37,10 +37,10 @@ namespace Szk3.Company.Infrastructure.Persistance.Configuration
 				.OnDelete(DeleteBehavior.Cascade);
 
 			builder.Navigation(x => x.Rates).AutoInclude();
-			builder.HasIndex(x => x.Rates).IsUnique();
+			//builder.HasIndex(x => x.Rates).IsUnique();
 
 			builder.Navigation(x => x.Requirements).AutoInclude();
-			builder.HasIndex(x => x.Requirements).IsUnique();
+			//builder.HasIndex(x => x.Requirements).IsUnique();
 		}
 	}
 }

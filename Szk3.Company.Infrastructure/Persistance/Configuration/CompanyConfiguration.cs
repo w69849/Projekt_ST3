@@ -45,10 +45,10 @@ namespace Szk3.Company.Infrastructure.Persistance.Configuration
 				.OnDelete(DeleteBehavior.Cascade);
 
 			builder.Navigation(x => x.Addresses).AutoInclude();
-			builder.HasIndex(x => x.Addresses).IsUnique();
+			//builder.HasIndex(x => x.Addresses).IsUnique();
 
 			builder.Navigation(x => x.Owners).AutoInclude();
-			builder.HasIndex(x => x.Owners).IsUnique();
+			//builder.HasIndex(x => x.Owners).IsUnique();
 		}
 	}
 }
