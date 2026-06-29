@@ -19,7 +19,7 @@ namespace Szk3.Company.Api.Controllers
 
 		[HttpPost("address")]
 		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-		public async Task<IActionResult> AddAddress([FromRoute] int companyId, [FromBody] AddAddressCommand request, CancellationToken token)
+		public async Task<IActionResult> AddAddress([FromBody] AddAddressCommand request, CancellationToken token)
 		{
 			var addressId = await _mediator.Send(request, token);
 
@@ -28,7 +28,7 @@ namespace Szk3.Company.Api.Controllers
 
 		[HttpPost("owner")]
 		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-		public async Task<IActionResult> AddOwner([FromRoute] int companyId, [FromBody] AddOwnerCommand request, CancellationToken token)
+		public async Task<IActionResult> AddOwner([FromBody] AddOwnerCommand request, CancellationToken token)
 		{
 			var ownerId = await _mediator.Send(request, token);
 

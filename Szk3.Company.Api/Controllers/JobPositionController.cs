@@ -12,7 +12,7 @@ namespace Szk3.Company.Api.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class JobPositionController : Controller
+	public class JobPositionController : ControllerBase
 	{
 		private readonly IMediator _mediator;
 
@@ -34,20 +34,20 @@ namespace Szk3.Company.Api.Controllers
 			return Ok(result);
 		}
 
-		[HttpPost("rates")]
-		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-		public async Task<IActionResult> AddRate([FromBody] AddRateCommand request, CancellationToken cancellationToken)
+		[HttpPost("{jobPositionId:int}/rates")]
+		[ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+		public async Task<IActionResult> AddRate([FromRoute] int jobPositionId, [FromBody] AddRateCommand request, CancellationToken cancellationToken)
 		{
-			var rateId = await _mediator.Send(request, cancellationToken);
-			return Ok(rateId);
+			var rateId = await _mediator.Send(request with { JobPositionId = jobPositionId }, cancellationToken);
+			return CreatedAtAction(nameof(GetById), new { id = jobPositionId }, rateId);
 		}
 
-		[HttpPost("requirements")]
-		[ProducesResponseType(typeof(int), StatusCodes.Status200OK)]
-		public async Task<IActionResult> AddRequirement([FromBody] AddRequirementCommand request, CancellationToken cancellationToken)
+		[HttpPost("{jobPositionId:int}/requirements")]
+		[ProducesResponseType(typeof(int), StatusCodes.Status201Created)]
+		public async Task<IActionResult> AddRequirement([FromRoute] int jobPositionId, [FromBody] AddRequirementCommand request, CancellationToken cancellationToken)
 		{
-			var requirementId = await _mediator.Send(request, cancellationToken);
-			return Ok(requirementId);
+			var requirementId = await _mediator.Send(request with { JobPositionId = jobPositionId }, cancellationToken);
+			return CreatedAtAction(nameof(GetById), new { id = jobPositionId }, requirementId);
 		}
 
 		[HttpDelete("{jobPositionId:int}/rates/{rateId:int}")]
